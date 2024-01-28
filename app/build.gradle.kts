@@ -45,6 +45,8 @@ dependencies {
 
     val retrofitVersion = "2.9.0"
     val hiltVersion = "2.46"
+    val lifecycleVersion = "2.7.0"
+    val navigationVersion = "2.7.6"
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -59,6 +61,14 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+    implementation ("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
+    implementation ("androidx.navigation:navigation-ui-ktx:$navigationVersion")
+    implementation ("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
+    implementation ("androidx.navigation:navigation-ui-ktx:$navigationVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
