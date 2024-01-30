@@ -1,6 +1,8 @@
-package com.serefakyuz.tindersample.api
+package com.serefakyuz.tindersample.di
 
+import com.serefakyuz.tindersample.api.ApiService
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +16,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
-    private const val ROOT_URL = "https://rickandmortyapi.com/api/"
+    private const val ROOT_URL = "https://rickandmortyapi.com/"
 
     @Singleton
     @Provides
@@ -30,13 +32,23 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit( okHttpClient: OkHttpClient) = Retrofit.Builder()
+    fun provideRetrofit( okHttpClient: OkHttpClient, moshi: Moshi) = Retrofit.Builder()
         .baseUrl(ROOT_URL)
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
         .client(okHttpClient)
         .build()
 
     @Singleton
     @Provides
     fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+
+    @Singleton
+    @Provides
+    fun providesMoshi(): Moshi = Moshi
+        .Builder()
+        .run {
+            add(KotlinJsonAdapterFactory())
+            build()
+        }
+
 }
