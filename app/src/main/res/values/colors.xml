@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="status_online">#1F8023</color>
+    <color name="status_offline">#A3051E</color>
+    <color name="status_unknown">#444544</color>
 </resources>

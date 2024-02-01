@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.serefakyuz.tindersample.common.doOnFailure
 import com.serefakyuz.tindersample.common.doOnLoading
 import com.serefakyuz.tindersample.common.doOnSuccess
-import com.serefakyuz.tindersample.common.map
 import com.serefakyuz.tindersample.model.charachter.ui.CharacterUiModel
 import com.serefakyuz.tindersample.repository.CharacterUseCase
 import com.serefakyuz.tindersample.ui.BaseViewModel
@@ -23,6 +22,7 @@ class HomeViewModel @Inject constructor(
     private val _characterListResponse:MutableLiveData<List<CharacterUiModel>> = MutableLiveData()
     val characterListResponse:LiveData<List<CharacterUiModel>> = _characterListResponse
 
+
     init {
         Log.e("TAGTAG", "INIT" )
         getCharacterList(0)
@@ -33,18 +33,15 @@ class HomeViewModel @Inject constructor(
         characterUseCase.getCharacterList(page)
             .doOnSuccess {
                 _characterListResponse.value = it
-                Log.e("TAGTAG", "getCharacterList: doOnSuccess" )
             }
             .doOnFailure {
-                Log.e("TAGTAG", "getCharacterList: doOnFail" )
                 _errorModel.value = it
             }
             .doOnLoading {
                 _isLoading.value = true
-                Log.e("TAGTAG", "getCharacterList: doOnLoading" )
             }.collect{
 
-                Log.e("TAGTAG", "getCharacterList: Collect: $it" )
+            Log.e("TAGTAG", "getCharacterList: Collect: $it" )
             }
     }
 }

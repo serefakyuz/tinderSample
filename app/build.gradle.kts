@@ -11,6 +11,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 
     defaultConfig {
@@ -69,6 +70,10 @@ dependencies {
     implementation ("androidx.navigation:navigation-ui-ktx:$navigationVersion")
     implementation ("androidx.navigation:navigation-fragment-ktx:$navigationVersion")
     implementation ("androidx.navigation:navigation-ui-ktx:$navigationVersion")
+
+    implementation ("com.github.bumptech.glide:glide:4.13.2")
+    // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

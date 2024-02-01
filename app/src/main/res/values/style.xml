@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="swipeScreenCommonText">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_marginStart">@dimen/commonHorizontalMargin</item>
+        <item name="android:layout_marginBottom">@dimen/commonItemBottomMargin</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="swipeScreenCommonText.Name" parent="swipeScreenCommonText">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="swipeScreenCommonText.Status" parent="swipeScreenCommonText">
+        <item name="android:textSize">12sp</item>
+        <item name="paddingStart">18dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="swipeScreenCommonText.Location" parent="swipeScreenCommonText">
+        <item name="android:textSize">14sp</item>
+        <item name="startIconDrawable">@android:drawable/ic_dialog_map</item>
+    </style>
+</resources>

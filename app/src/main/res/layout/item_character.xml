@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.serefakyuz.tindersample.model.charachter.ui.ICharacterUIModel" />
+    </data>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black">
+
+            <ImageView
+                android:id="@+id/imageViewCharacterImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:loadImage="@{item.imageUrl}"
+                android:scaleType="fitStart"/>
+
+            <TextView
+                android:id="@+id/textViewLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/swipeScreenCommonText.Location"
+                android:text="@{item.location}"
+                tools:text="Ankara"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/textViewName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/swipeScreenCommonText.Name"
+                android:text="@{item.name}"
+                tools:text="SA"
+                app:layout_constraintBottom_toTopOf="@id/textViewLocation"
+                app:layout_constraintStart_toStartOf="parent"/>
+            
+            <TextView
+                android:id="@+id/textViewStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/swipeScreenCommonText.Status"
+                app:setStatus="@{item.status}"
+                tools:text="Online"
+                app:layout_constraintBottom_toTopOf="@id/textViewName"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
