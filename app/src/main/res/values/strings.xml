@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">TinderSample</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Tinder Sample</string>
+    <string name="networkErrorTitle">Connection error</string>
+    <string name="networkErrorMsg">Unable to connect to server. Check your internet connection and try again</string>
+    <string name="ok">Ok</string>
+
 </resources>

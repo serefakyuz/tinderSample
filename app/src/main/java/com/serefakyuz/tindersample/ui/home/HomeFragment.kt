@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.serefakyuz.tindersample.databinding.FragmentHomeBinding
+import com.serefakyuz.tindersample.extension.isNetworkAvailable
+import com.serefakyuz.tindersample.extension.showNoNetworkDialog
 import com.serefakyuz.tindersample.ui.BaseFragment
 import com.serefakyuz.tindersample.ui.view.EventListener
 import com.serefakyuz.tindersample.ui.view.StackLayoutManager
@@ -21,6 +23,9 @@ class HomeFragment : BaseFragment(), EventListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(context?.isNetworkAvailable() != true){
+            context?.showNoNetworkDialog()
+        }
     }
 
     override fun onCreateView(
@@ -43,6 +48,11 @@ class HomeFragment : BaseFragment(), EventListener {
     private fun observeChanges() {
         viewModel.characterListResponse.observe(viewLifecycleOwner){
            adapter?.submitList(viewModel.characterList)
+        }
+
+        viewModel.errorModel.observe(viewLifecycleOwner){
+            // Handle API errors
+            Log.e("HomeFragment", "observeChanges: ${it.message}", )
         }
     }
 
