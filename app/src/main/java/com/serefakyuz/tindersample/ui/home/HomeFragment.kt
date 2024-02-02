@@ -1,18 +1,19 @@
 package com.serefakyuz.tindersample.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.serefakyuz.tindersample.databinding.FragmentHomeBinding
 import com.serefakyuz.tindersample.ui.BaseFragment
+import com.serefakyuz.tindersample.ui.view.EventListener
 import com.serefakyuz.tindersample.ui.view.StackLayoutManager
-import com.serefakyuz.tindersample.ui.view.SwipeListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment(), SwipeListener {
+class HomeFragment : BaseFragment(), EventListener {
 
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()
@@ -35,17 +36,27 @@ class HomeFragment : BaseFragment(), SwipeListener {
 
     private fun initViews() {
         binding.recyclerViewCharacters.layoutManager = StackLayoutManager()
-        binding.recyclerViewCharacters.setSwipeListener(this)
+        binding.recyclerViewCharacters.setEventListener(this)
         binding.recyclerViewCharacters.adapter = adapter
     }
 
     private fun observeChanges() {
         viewModel.characterListResponse.observe(viewLifecycleOwner){
-           adapter?.submitList(it)
+           adapter?.submitList(viewModel.characterList)
         }
     }
 
     override fun onSwiped(position: Int, direction: Int) {
+        when(direction){
+            StackLayoutManager.SWIPE_LEFT -> {
+                //TODO do action
+                Log.e("HomeFragment", "NOPE!")
+            }
+            StackLayoutManager.SWIPE_RIGHT -> {
+                //TODO do action
+                Log.e("HomeFragment", "LIKE!")
+            }
+        }
     }
 
     override fun onChangeHorizontalDrag(direction: Int, percent: Float) {
@@ -54,5 +65,8 @@ class HomeFragment : BaseFragment(), SwipeListener {
     override fun onChangeVerticalDrag(direction: Int, percent: Float) {
     }
 
+    override fun onLoadMoreItems() {
+        viewModel.loadMore()
+    }
 
 }

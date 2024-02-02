@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.serefakyuz.tindersample.common.doOnFailure
 import com.serefakyuz.tindersample.common.doOnLoading
 import com.serefakyuz.tindersample.common.doOnSuccess
+import com.serefakyuz.tindersample.model.charachter.CharacterListResponse
+import com.serefakyuz.tindersample.model.charachter.mapper.CharacterMapper
 import com.serefakyuz.tindersample.model.charachter.ui.CharacterUiModel
 import com.serefakyuz.tindersample.repository.CharacterUseCase
 import com.serefakyuz.tindersample.ui.BaseViewModel
@@ -16,23 +18,35 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val characterUseCase: CharacterUseCase
+    private val characterUseCase: CharacterUseCase,
+    private val characterMapper: CharacterMapper
 ): BaseViewModel(){
 
-    private val _characterListResponse:MutableLiveData<List<CharacterUiModel>> = MutableLiveData()
-    val characterListResponse:LiveData<List<CharacterUiModel>> = _characterListResponse
+    private val _characterListResponse:MutableLiveData<CharacterListResponse> = MutableLiveData()
+    val characterListResponse:LiveData<CharacterListResponse> = _characterListResponse
+
+    val characterList: ArrayList<CharacterUiModel> = arrayListOf()
 
 
     init {
-        Log.e("TAGTAG", "INIT" )
-        getCharacterList(0)
+        getCharacterList(1)
     }
 
+    fun loadMore(){
+        val info = characterListResponse.value?.info
+        info?.getNextPage()?.let {
+            getCharacterList(it)
+        }
+    }
 
     private fun getCharacterList(page: Int) = viewModelScope.launch {
         characterUseCase.getCharacterList(page)
             .doOnSuccess {
+                characterMapper.mapFrom(it)?.let { list ->
+                    characterList.addAll(list)
+                }
                 _characterListResponse.value = it
+
             }
             .doOnFailure {
                 _errorModel.value = it

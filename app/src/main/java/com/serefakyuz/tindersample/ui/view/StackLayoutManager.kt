@@ -1,6 +1,5 @@
 package com.serefakyuz.tindersample.ui.view
 
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,8 @@ class StackLayoutManager : RecyclerView.LayoutManager() {
         const val SWIPE_RIGHT = 1 shl 1
         const val SWIPE_TOP = 1 shl 2
         const val SWIPE_BOTTOM = 1 shl 3
+
+        const val PAGINATION_TRIGGER_THRESHOLD = 3
     }
 
     private var startXPosition: Float? = null
@@ -24,7 +25,7 @@ class StackLayoutManager : RecyclerView.LayoutManager() {
     private var topPosition = 0
 
     private var dragListener: DragListener? = null
-    private var swipeListener: SwipeListener? = null
+    private var eventListener: EventListener? = null
 
     private var swipeDirection = SWIPE_LEFT or SWIPE_RIGHT
     private var preloadCount = 3
@@ -34,9 +35,9 @@ class StackLayoutManager : RecyclerView.LayoutManager() {
     private var restoreScaleAnimationDuration = 200L
     private var autoDraggingAnimationDuration = 200L
 
-    fun setDragListener(dragListener: DragListener, swipeListener: SwipeListener) {
+    fun setDragListener(dragListener: DragListener, eventListener: EventListener) {
         this.dragListener = dragListener
-        this.swipeListener = swipeListener
+        this.eventListener = eventListener
     }
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
@@ -144,13 +145,13 @@ class StackLayoutManager : RecyclerView.LayoutManager() {
         val swipeHeightPercent = 1f.coerceAtMost(dY / recyclerView.measuredHeight)
 
         if (isEnableDirection(judgeLeftOrRight(swipeWidthPercent))) {
-            swipeListener?.onChangeHorizontalDrag(
+            eventListener?.onChangeHorizontalDrag(
                 judgeLeftOrRight(swipeWidthPercent),
                 abs(swipeWidthPercent)
             )
         }
         if (isEnableDirection(judgeTopOrBottom(swipeHeightPercent))) {
-            swipeListener?.onChangeHorizontalDrag(
+            eventListener?.onChangeHorizontalDrag(
                 judgeTopOrBottom(swipeHeightPercent),
                 abs(swipeHeightPercent)
             )
@@ -255,8 +256,11 @@ class StackLayoutManager : RecyclerView.LayoutManager() {
                 resetViewPosition(swipedView)
                 val currentPosition = topPosition
                 topPosition++
+                if(topPosition == itemCount - PAGINATION_TRIGGER_THRESHOLD){
+                    eventListener?.onLoadMoreItems()
+                }
                 requestLayout()
-                //******onSwipeListener?.onSwiped(currentPosition, direction)
+                eventListener?.onSwiped(currentPosition, direction)
             }
         }
 

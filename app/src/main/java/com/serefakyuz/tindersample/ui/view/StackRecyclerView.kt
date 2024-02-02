@@ -18,7 +18,7 @@ class StackRecyclerView: RecyclerView, DragListener {
 
     }
 
-    fun setSwipeListener(swipeListener: SwipeListener){
+    fun setEventListener(swipeListener: EventListener){
         if(layoutManager is StackLayoutManager){
             (layoutManager as StackLayoutManager).setDragListener(this, swipeListener)
         }
