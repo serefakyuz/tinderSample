@@ -52,7 +52,7 @@ class HomeFragment : BaseFragment(), EventListener {
 
         viewModel.errorModel.observe(viewLifecycleOwner){
             // Handle API errors
-            Log.e("HomeFragment", "observeChanges: ${it.message}", )
+            Log.e("HomeFragment", "observeChanges: $it", )
         }
     }
 
