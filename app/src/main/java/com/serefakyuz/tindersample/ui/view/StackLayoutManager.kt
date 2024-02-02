@@ -18,6 +18,7 @@ class StackLayoutManager : RecyclerView.LayoutManager() {
         const val SWIPE_BOTTOM = 1 shl 3
 
         const val PAGINATION_TRIGGER_THRESHOLD = 3
+        const val ROTATION_ANIMATION_DIVIDER = 60
     }
 
     private var startXPosition: Float? = null
@@ -302,6 +303,7 @@ class StackLayoutManager : RecyclerView.LayoutManager() {
         endAction: (() -> Unit)? = null
     ) {
         val animation = ViewCompat.animate(view)
+            .rotation(-(x/ROTATION_ANIMATION_DIVIDER))
             .x(x)
             .y(y)
             .setUpdateListener(updateListener)
@@ -314,6 +316,7 @@ class StackLayoutManager : RecyclerView.LayoutManager() {
 
     private fun restoreScaleAnimation(view: View, duration: Long = 0) {
         view.animate()
+            .rotation(0f)
             .scaleX(1f)
             .scaleY(1f)
             .setDuration(duration)
@@ -323,6 +326,7 @@ class StackLayoutManager : RecyclerView.LayoutManager() {
     private fun resetViewPosition(view: View) {
         view.x = startXPosition ?: 0f
         view.y = startYPosition ?: 0f
+        view.rotation = 0f
     }
 
     private fun clearViewTouchListener(view: View) {

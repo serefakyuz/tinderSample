@@ -2,11 +2,8 @@ package com.serefakyuz.tindersample.model.charachter
 
 
 import android.net.Uri
-import androidx.core.net.UriCompat
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.net.URLDecoder
-import java.net.URLEncoder
 
 @JsonClass(generateAdapter = true)
 data class Info(
